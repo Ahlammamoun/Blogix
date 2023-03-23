@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block body %}
+
+<h1>{{ post.title }} <span class="badge bg-primary">{{ post.nbLikes }}💜</h1>
+
+<p><i>Publié le : {{ post.publishedAt|date("d-m-Y")}}</i></p>
+
+<p>{{ post.body }}</p>
+
+
+
+{% for comment in post.comments %}
+  <div class="card-body bg-danger border border-dark" >
+    <h5 class="card-title">{{ comment.body }}</h5>
+    <p class="card-text">{{ comment.username }}</p>
+  </div>
+{% endfor %}
+
+
+<h1>ajouter un commentaire</h1>
+
+
+
+   <form action="" method="POST" class="mt-5">
+        <div class="mb-3">
+            <label for="username" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="username" placeholder="Nom de la catégorie" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="body" class="form-label">Sous-titre</label>
+            <input type="text" class="form-control" id="body" placeholder="Sous-titre" aria-describedby="subtitleHelpBlock" name="body">
+            <small id="subtitleHelpBlock" class="form-text text-muted">
+                Sera affiché sur la page d'accueil comme bouton devant l'image
+            </small>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-dark mt-5">Valider</button>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
