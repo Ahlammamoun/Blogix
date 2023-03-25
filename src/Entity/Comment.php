@@ -36,11 +36,15 @@ class Comment
      * @ORM\Column(type="string", length=255)
      */
     private $username;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     /**
+     * @ORM\Column(type="text")
+     *
      */
+    
     private $createdAt;
+   
+
+
 
     public function getId(): ?int
     {

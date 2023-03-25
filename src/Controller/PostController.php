@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use App\Entity\Post;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -16,8 +17,7 @@ use DateTime;
 use DateTimeImmutable;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 
 
@@ -40,56 +40,92 @@ class PostController extends AbstractController
     /**
      * @Route("/post/{id}", name="post", requirements={"id"="\d+"}, methods={"GET", "POST"})
      */
-    public function show(int $id, PostRepository $postRepo, request $request, EntityManagerInterface $doctrine): Response
+    public function show(int $id, PostRepository $postRepo): Response
     {
-        dump($request);
+        //dump($request);
     
             $post = $postRepo->find($id);
             //dd($post);
 
-            if ($post === null) {
+           /* if ($post === null) {
                     throw $this->createNotFoundException('article inexistant');
             }
 
-
-        if ($request->isMethod("POST")) {
-
+            $commentForFormulaire = new Comment();
 
 
-            $username = $request->request->get("username");
-            $body = $request->request->get("body");
+            $form = $this->createForm(CommentType::class, $commentForFormulaire);
 
-          
+            $form->handleRequest($request);
 
-            $comment = new Comment();
-            $comment->setUsername($username);
-            $comment->setBody($body);
-            $comment->setCreatedAt(new DateTimeImmutable("now"));
+            if ($request->isMethod("POST")) {
+
+                    if ($form->isSubmitted() && $form->isValid()){
 
 
-            $comment->setPost($post);
+                       /* $username = $request->request->get("username");
+                        $body = $request->request->get("body");
+                        $comment = new Comment();
+                        $comment->setUsername($username);
+                        $comment->setBody($body);
+                        $commentForFormulaire->setPost($post);
 
-            $doctrine->persist($comment);
-            $doctrine->flush();
-    
+                        $commentForFormulaire->setCreatedAt(new DateTimeImmutable("now"));
+
+                        $doctrine->persist($commentForFormulaire);
+                        $doctrine->flush();
+
+                        return $this->redirectToRoute("post", ["id" => $id]);*/
+ 
 
 
-
-
-
-        }
-  
-           
-
-        
-      
-        return $this->render('post/show.html.twig', [
+        return $this->renderForm('post/show.html.twig', [
             'post' => $post,
-            
-            
-
+          
         ]);
     }
+
+
+
+     /**
+     * @Route("/new/{id}", name="new_comment", methods={"GET", "POST"})
+     */
+    public function new(int $id, PostRepository $postRepo, Request $request, CommentRepository $CommentRepository): Response
+    {
+
+        $post = $postRepo->find($id);
+
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment->setPost($post);
+            $CommentRepository->add($comment, true);
+
+            return $this->redirectToRoute("post", ["id" => $id]);
+
+        }
+
+        return $this->renderForm('post/new_comment.html.twig', [
+            'post' => $post,
+            'form' => $form,
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

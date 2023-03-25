@@ -18,12 +18,9 @@
   </div>
 {% endfor %}
 
+ <th scope="row"><a href="{{ path('new_comment',  {id: post.id}) }}">ajouter un commentaire</a></td>
 
-<h1>ajouter un commentaire</h1>
-
-
-
-   <form action="" method="POST" class="mt-5">
+   {#<form action="" method="POST" class="mt-5">
         <div class="mb-3">
             <label for="username" class="form-label">Nom</label>
             <input type="text" class="form-control" id="username" placeholder="Nom de la catégorie" name="username">
@@ -38,7 +35,7 @@
         <div class="row">
             <button type="submit" class="btn btn-dark mt-5">Valider</button>
         </div>
-    </form>
+    </form>#}
 
 
 
