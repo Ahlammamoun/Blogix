@@ -16,9 +16,10 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('body',TextareaType::class)
+        
             ->add('username', TextType::class)
-            ->add('save', SubmitType::class)
+            ->add('body',TextareaType::class)
+            //->add('save', SubmitType::class)
             
                  //->getForm();*/
             /*->add('publishedAt')

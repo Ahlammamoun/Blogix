@@ -3,7 +3,7 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block body %}
 
-<h1>{{ post.title }} <span class="badge bg-primary">{{ post.nbLikes }}💜</h1>
+<h1>{{ post.title }} <span class="badge bg-warning">{{ post.nbLikes }}💜</h1>
 
 <p><i>Publié le : {{ post.publishedAt|date("d-m-Y")}}</i></p>
 
@@ -12,13 +12,13 @@
 
 
 {% for comment in post.comments %}
-  <div class="card-body bg-danger border border-dark" >
+  <div class="card-body bg-dark text-warning" >
     <h5 class="card-title">{{ comment.body }}</h5>
     <p class="card-text">{{ comment.username }}</p>
   </div>
 {% endfor %}
 
- <th scope="row"><a href="{{ path('new_comment',  {id: post.id}) }}">ajouter un commentaire</a></td>
+ <th scope="row"><a href="{{ path('new_comment',  {id: post.id}) }}" class="text-danger">ajouter un commentaire</a></td>
 
    {#<form action="" method="POST" class="mt-5">
         <div class="mb-3">

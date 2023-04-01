@@ -5,7 +5,12 @@
 {% block body %}
 
 <h1>ajouter un commentaire</h1>
+<div class="bg-dark text-warning">
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn text-dark w-100 bg-warning">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
 
-{{ form(form )}}
+</div>
 
 {% endblock %}
